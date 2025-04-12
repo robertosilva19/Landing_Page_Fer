@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fernanda Imóveis | Santa Cecília</title>
+  <link rel="shortcut icon" href="./assets/Favicon.svg" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:wght@400;600&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'verde-cta': '#2ECC71',
+            'azul-principal': '#1E3A5F',
+            'cinza-claro': '#F8F9FA',
+            'cinza-medio': '#CED4DA',
+            'lilas-claro': '#A6B6D9',
+          },
+          fontFamily: {
+            'montserrat': ['Montserrat', 'sans-serif'],
+            'krona': ['Krona One', 'sans-serif'],
+            'opensans': ['Open Sans', 'sans-serif'],
+          },
+          backgroundImage: {
+            'gradiente': 'linear-gradient(180deg, #F8F9FA 0%, rgb(255, 255, 255) 80%)',
+            'gradiente-card': 'linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(30, 58, 95, 0.05) 100%)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-montserrat">
+  <!-- Cabeçalho -->
+  <header class="bg-white shadow-md py-4 px-6 md:px-12">
+    <div class="flex items-center justify-between max-w-6xl mx-auto">
+      <a href="#" class="flex-shrink-0">
+        <img class="h-12" src="./assets/logo_fernanda.png" alt="Logo Fernanda">
+      </a>
+      <div class="hidden md:flex items-center space-x-8">
+        <span class="h-6 w-px bg-gray-300"></span>
+        <nav class="flex space-x-8">
+          <a href="#" class="text-azul-principal hover:text-verde-cta font-medium">Home</a>
+          <a href="#" class="text-azul-principal hover:text-verde-cta font-medium">Sobre</a>
+          <a href="#" class="text-azul-principal hover:text-verde-cta font-medium">Localização</a>
+          <a href="#" class="text-azul-principal hover:text-verde-cta font-medium">Contato</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Container Principal -->
+  <section class="relative bg-gradiente px-4 py-12 md:py-24">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+      <div class="text-center md:text-left">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          Seu novo lar na <span class="text-azul-principal">Santa Cecília</span>
+        </h1>
+        
+        <!-- Carrossel - Visível apenas em telas maiores -->
+        <div x-data="{ activeSlide: 0, slides: ['/assets/mapa.jpg', '/assets/bairro.jpg', '/assets/fachada.jpg', '/assets/implantacao.jpg', ''] }" class="hidden md:block mb-8 relative">
+          <div class="overflow-hidden rounded-lg shadow-lg">
+            <div class="flex transition-transform duration-500" :style="`transform: translateX(-${activeSlide * 100}%)`">
+              <template x-for="(slide, index) in slides" :key="index">
+                <div class="flex-shrink-0 w-full">
+                  <img :src="slide" class="w-full h-64 object-cover" alt="Imagem do imóvel">
+                  <img src="./assets/separador-direita.svg" alt="Separador" class="h-4 mx-auto md:mx-0">
+                  <img src="./assets/separador-esquerda.svg" alt="Separador" class="h-4 mx-auto md:ml-auto">
+
+                </div>
+              </template>
+            </div>
+            <!-- Indicadores -->
+            <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+              <template x-for="(slide, index) in slides" :key="index">
+                <button @click="activeSlide = index" :class="{'bg-verde-cta': activeSlide === index, 'bg-white/50': activeSlide !== index}" class="w-3 h-3 rounded-full transition-colors duration-300"></button>
+              </template>
+            </div>
+            <!-- Botões de navegação -->
+            <button @click="activeSlide = activeSlide === 0 ? slides.length - 1 : activeSlide - 1" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md" title="Previous Slide">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-azul-principal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button @click="activeSlide = activeSlide === slides.length - 1 ? 0 : activeSlide + 1" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md" title="Next Slide">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-azul-principal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <button class="bg-verde-cta hover:bg-green-600 text-white font-bold py-3 px-8 rounded-md transition duration-300">
+          Quero saber mais
+        </button>
+      </div>
+      <div class="rounded-lg overflow-hidden shadow-xl">
+        <video class="w-full h-auto" controls>
+          <source src="/assets/video_anuncio (1).mp4" type="video/mp4">
+          <!-- <source src="./assets/video_anuncio.webm" type="video/webm"> -->
+          Seu navegador não suporta a tag de vídeo.
+        </video>
+      </div>
+    </div>
+
+    <!-- Formulário flutuante -->
+    <div class="max-w-md mx-auto md:absolute md:right-12 md:top-1/2 md:transform md:-translate-y-1/2 bg-white rounded-lg shadow-xl p-6 mt-12 md:mt-0">
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold text-azul-principal mb-2">Fale com a corretora</h2>
+        <p class="text-gray-600">Entre em contato para agendar uma visita, tirar dúvidas ou solicitar uma simulação.</p>
+      </div>
+      <form>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+            <input type="text" placeholder="Seu nome" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input type="email" placeholder="Seu email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+            <input type="tel" placeholder="(DDD) 90000-0000" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+            <textarea placeholder="Digite aqui sua mensagem" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="mt-6 w-full bg-verde-cta hover:bg-green-600 text-white font-bold py-3 px-4 rounded-md transition duration-300">
+          Enviar
+        </button>
+      </form>
+    </div>
+    
+    <!-- Carrossel - Visível apenas em telas menores, após o formulário -->
+    <div x-data="{ activeSlide: 0, slides: ['/assets/carousel-1.jpg', '/assets/carousel-2.jpg', '/assets/carousel-3.jpg'] }" class="md:hidden mt-12 relative">
+      <div class="overflow-hidden rounded-lg shadow-lg">
+        <div class="flex transition-transform duration-500" :style="`transform: translateX(-${activeSlide * 100}%)`">
+          <template x-for="(slide, index) in slides" :key="index">
+            <div class="flex-shrink-0 w-full">
+              <img :src="slide" class="w-full h-48 object-cover" alt="Imagem do imóvel">
+            </div>
+          </template>
+        </div>
+        <!-- Indicadores -->
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+          <template x-for="(slide, index) in slides" :key="index">
+            <button @click="activeSlide = index" :class="{'bg-verde-cta': activeSlide === index, 'bg-white/50': activeSlide !== index}" class="w-3 h-3 rounded-full transition-colors duration-300"></button>
+          </template>
+        </div>
+        <!-- Botões de navegação -->
+        <button @click="activeSlide = activeSlide === 0 ? slides.length - 1 : activeSlide - 1" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md" title="Previous Slide">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-azul-principal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button @click="activeSlide = activeSlide === slides.length - 1 ? 0 : activeSlide + 1" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md" title="Next Slide">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-azul-principal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de Conteúdo -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <!-- Localização -->
+      <div class="grid md:grid-cols-2 gap-8 items-center mb-24">
+        <div class="order-2 md:order-1">
+          <img class="rounded-lg shadow-lg w-full" src="./assets/mapa.jpg" alt="Mapa da região do Projeto">
+        </div>
+        <div class="order-1 md:order-2 text-center md:text-left">
+          <h2 class="text-3xl font-bold text-azul-principal mb-4">Localização privilegiada</h2>
+          <p class="text-lg text-gray-700 mb-6">More a poucos metros do metrô Santa Cecília com toda infraestrutura ao seu redor: mercados, hospitais, escolas e muito mais.</p>
+          <img src="./assets/separador-direita.svg" alt="Separador" class="h-4 mx-auto md:mx-0">
+        </div>
+      </div>
+      
+      <!-- Conforto -->
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="text-center md:text-right">
+          <h2 class="text-3xl font-bold text-azul-principal mb-4">Conforto e qualidade</h2>
+          <p class="text-lg text-gray-700 mb-6">Unidades com 2 dormitórios, varanda e área de lazer completa. Ideal para quem busca praticidade e bem-estar.</p>
+          <img src="./assets/separador-esquerda.svg" alt="Separador" class="h-4 mx-auto md:ml-auto">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <img class="rounded-lg shadow-lg w-full" src="./assets/churrasqueira.jpg" alt="Área de lazer churrasqueira">
+          <img class="rounded-lg shadow-lg w-full" src="./assets/salao_festa.jpg" alt="Salão de festa com espaço gourmet">
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- Cards -->
+  <section class="py-16 bg-cinza-claro">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-gradiente-card rounded-lg shadow-lg p-6 text-center">
+          <img src="./assets/localizacao.jpg" alt="Ícone Localização da região" class="h-16 mx-auto mb-4">
+          <h3 class="text-2xl font-bold text-azul-principal mb-2">Localização</h3>
+          <img src="./assets/soft-star.png" alt="Estrela" class="h-6 mx-auto my-3">
+          <p class="text-gray-700">A poucos metros do metrô Santa Cecília, com fácil acesso ao centro e outras regiões da cidade.</p>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="bg-gradiente-card rounded-lg shadow-lg p-6 text-center">
+          <img src="./assets/pet_place.jpg" alt="Ícone Lazer pet care" class="h-16 mx-auto mb-4">
+          <h3 class="text-2xl font-bold text-azul-principal mb-2">Lazer Completo</h3>
+          <img src="./assets/soft-star.png" alt="Estrela" class="h-6 mx-auto my-3">
+          <p class="text-gray-700">Salão de festas, coworking, lavanderia compartilhada, playground, pet care e mais.</p>
+        </div>
+        
+        <!-- Card 3 -->
+        <div class="bg-gradiente-card rounded-lg shadow-lg p-6 text-center">
+          <img src="./assets/minha casa minha vida.png" alt="Ícone Financiamento" class="h-32 mx-auto mb-4">
+          <h3 class="text-2xl font-bold text-azul-principal mb-2">Facilidade no pagamento</h3>
+          <img src="./assets/soft-star.png" alt="Estrela" class="h-6 mx-auto my-3">
+          <p class="text-gray-700">Entrada facilitada, parcelas acessíveis e financiamento com as melhores condições do mercado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Seção de Conteúdo (Existente) -->
+    <section class="py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4">
+        <!-- Localização -->
+        <div class="grid md:grid-cols-2 gap-8 items-center mb-24">
+          <!-- ... conteúdo da localização ... -->
+        </div>
+  
+        <!-- Conforto -->
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+         <!-- ... conteúdo do conforto ... -->
+        </div>
+      </div>
+    </section>
+    <!-- FIM da Seção de Conteúdo (Existente) -->
+  
+  
+    <!-- NOVA SEÇÃO: Vantagens e Fluxo de Pagamento -->
+    <section class="py-16 bg-white"> <!-- Pode alternar para bg-cinza-claro se preferir -->
+      <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
+  
+        <!-- Coluna Esquerda: Texto sobre Vantagens -->
+        <div class="text-center md:text-left">
+          <h2 class="text-3xl font-bold text-azul-principal mb-4">Facilidades do Programa Minha Casa Minha Vida</h2>
+          <p class="text-lg text-gray-700 mb-6">
+            Realize o sonho da casa própria com as vantagens exclusivas do programa Minha Casa Minha Vida. Conte com subsídios do governo, taxas de juros reduzidas e condições de financiamento que cabem no seu bolso. É a oportunidade perfeita para sair do aluguel e investir no seu futuro com segurança e tranquilidade.
+          </p>
+          <p class="text-lg text-gray-700 mb-6">
+            Além disso, o programa oferece prazos de pagamento mais longos, tornando as parcelas mensais mais acessíveis. Consulte nossa equipe para entender como você pode se beneficiar e dar o primeiro passo rumo ao seu novo lar.
+          </p>
+          <img src="./assets/separador-direita.svg" alt="Separador" class="h-4 mx-auto md:mx-0">
+        </div>
+  
+        <!-- Coluna Direita: Tabela de Fluxo de Pagamento -->
+        <div class="bg-gray-50 rounded-lg shadow-md p-6 border border-gray-200">
+          <h3 class="text-2xl font-bold text-azul-principal mb-6 text-center md:text-left">Sugestão de Fluxo de Pagamento</h3>
+          <table class="w-full text-left mb-4">
+            <tbody>
+              <tr class="border-b border-gray-200">
+                <td class="py-3 px-2 text-gray-600">Ato:</td>
+                <td class="py-3 px-2 text-azul-principal font-semibold text-right">R$ 500,00</td>
+              </tr>
+              <tr class="border-b border-gray-200">
+                <td class="py-3 px-2 text-gray-600">34 mensais:</td>
+                <td class="py-3 px-2 text-azul-principal font-semibold text-right">R$ 641,17</td>
+              </tr>
+              <tr class="border-b border-gray-200">
+                <td class="py-3 px-2 text-gray-600">2 anuais:</td>
+                <td class="py-3 px-2 text-azul-principal font-semibold text-right">R$ 5.000,00</td>
+              </tr>
+              <tr class="border-b border-gray-200">
+                <td class="py-3 px-2 text-gray-600">1 única (Chaves):</td>
+                <td class="py-3 px-2 text-azul-principal font-semibold text-right">R$ 1.500,00</td>
+              </tr>
+              <tr class="border-b border-gray-200">
+                <td class="py-3 px-2 text-gray-600">FGTS:</td>
+                <td class="py-3 px-2 text-azul-principal font-semibold text-right">R$ 5.000,00</td>
+              </tr>
+              <tr class="border-b-2 border-azul-principal">
+                <td class="py-3 px-2 text-gray-600">Financiamento:</td>
+                <td class="py-3 px-2 text-azul-principal font-semibold text-right">R$ 211.200,00</td>
+              </tr>
+              <tr>
+                <td class="pt-4 pb-2 px-2 text-azul-principal font-bold text-lg">Valor Total:</td>
+                <td class="pt-4 pb-2 px-2 text-verde-cta font-bold text-lg text-right">R$ 250.000,00</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-gray-500 italic mt-4">
+            * Fluxo sugerido para unidade de 36m² sem vaga. Consulte condições e disponibilidade de unidades. Valores sujeitos a alteração sem aviso prévio e análise de crédito.
+          </p>
+        </div>
+  
+      </div>
+    </section>
+    <!-- FIM DA NOVA SEÇÃO -->
+  
+  
+    <!-- Cards (Existente) -->
+    <section class="py-16 bg-cinza-claro">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+          <!-- ... conteúdo do card 1 ... -->
+          <!-- Card 2 -->
+          <!-- ... conteúdo do card 2 ... -->
+          <!-- Card 3 -->
+          <!-- ... conteúdo do card 3 ... -->
+        </div>
+      </div>
+    </section>
+    <!-- FIM da Seção de Cards (Existente) -->
+
+  <!-- Seção de Inscrição -->
+  <section class="py-16 bg-azul-principal text-white relative overflow-hidden">
+    <img class="absolute top-0 left-0 h-24 md:hidden" src="./assets/mandala-superior-mobile.svg" alt="Mandala">
+    <img class="absolute bottom-0 right-0 h-24 md:hidden" src="./assets/mandala-inferior-mobile.svg" alt="Mandala">
+    <img class="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 h-48" src="./assets/mandala-esquerda-tablet.svg" alt="Mandala">
+    <img class="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 h-48" src="./assets/mandala-direita-tablet.svg" alt="Mandala">
+    
+    <div class="max-w-2xl mx-auto px-4 text-center relative z-10">
+      <h2 class="text-3xl font-bold mb-4">Receba mais informações por WhatsApp</h2>
+      <p class="text-lg mb-8">Cadastre-se para receber tabela de preços, disponibilidade e condições de pagamento exclusivas.</p>
+      <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        <input type="tel" placeholder="Seu WhatsApp" class="flex-1 px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-verde-cta">
+        <button class="bg-verde-cta hover:bg-green-600 text-white font-bold py-3 px-6 rounded-md transition duration-300">
+          Quero receber
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de Contato -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-3 gap-4">
+          <img src="./assets/contato-img-1.png" alt="Imagem Contato" class="rounded-lg shadow-lg w-full">
+          <img src="./assets/contato-img-2.png" alt="Imagem Contato" class="rounded-lg shadow-lg w-full">
+          <img src="./assets/contato-img-3.png" alt="Imagem Contato" class="rounded-lg shadow-lg w-full">
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div class="mb-6">
+            <h2 class="text-2xl font-bold text-azul-principal mb-2">Fale com a corretora</h2>
+            <p class="text-gray-600">Entre em contato para agendar uma visita, tirar dúvidas ou solicitar uma simulação.</p>
+          </div>
+          <form>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                <input type="text" placeholder="Seu nome" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input type="email" placeholder="Seu email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                <input type="tel" placeholder="(DDD) 90000-0000" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+                <textarea placeholder="Digite aqui sua mensagem" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="mt-6 w-full bg-verde-cta hover:bg-green-600 text-white font-bold py-3 px-4 rounded-md transition duration-300">
+              Enviar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="bg-azul-principal text-white py-8">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <p class="mb-4">Acesse nossas redes:</p>
+      <div class="flex justify-center space-x-6 mb-6">
+        <a href="#" class="bg-white p-2 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-azul-principal" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+          </svg>
+        </a>
+        <a href="#" class="bg-white p-2 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-azul-principal" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+        <a href="#" class="bg-white p-2 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-azul-principal" fill="currentColor" viewBox="0 0 448 512">
+            <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"/>
+          </svg>
+        </a>
+      </div>
+      <p class="mb-2">Fernanda Imóveis - CRECI 123456-F</p>
+      <p class="text-sm text-gray-300">Desenvolvido por você. Projeto fictício sem fins comerciais.</p>
+    </div>
+  </footer>
+</body>
+
+</html>
