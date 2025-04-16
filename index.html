@@ -41,6 +41,38 @@
     html {
       scroll-behavior: smooth;
     }
+
+    .carousel-video-size {
+      height: 360px; /* Tamanho padrão para telas maiores */
+      width: 100%; /* Garante que ocupe toda a largura disponível */
+      object-fit: cover; /* Ajusta o conteúdo sem distorção */
+    }
+
+    @media (max-width: 768px) {
+      .carousel-video-size {
+        height: auto; /* Altura automática para manter o formato original */
+        width: 100%; /* Garante que ocupe toda a largura disponível */
+        object-fit: contain; /* Mostra o vídeo inteiro sem cortar */
+      }
+    }
+
+    .carousel-container {
+      max-width: 100%; /* Garante que o carrossel ocupe toda a largura disponível */
+      margin: 0 auto; /* Centraliza o carrossel */
+    }
+
+    .carousel-image {
+      width: 100%; /* Garante que ocupe toda a largura disponível */
+      height: 360px; /* Altura fixa para telas maiores */
+      object-fit: cover; /* Ajusta o conteúdo sem distorção */
+    }
+
+    @media (max-width: 768px) {
+      .carousel-image {
+        height: auto; /* Altura automática para manter o formato original em telas menores */
+        object-fit: contain; /* Mostra a imagem inteira sem cortar */
+      }
+    }
   </style>
 </head>
 
@@ -54,10 +86,11 @@
       <div class="hidden md:flex items-center space-x-8">
         <span class="h-6 w-px bg-gray-300"></span>
         <nav class="flex space-x-8">
-            <a href="javascript:location.reload()" class="text-azul-principal hover:text-verde-cta font-medium">Home</a>
-            <a href="#detalhes-projeto" class="text-azul-principal hover:text-verde-cta font-medium">Sobre</a>
-            <a href="#localizacao" class="text-azul-principal hover:text-verde-cta font-medium">Localização</a>
-            <a href="#corretora" class="text-azul-principal hover:text-verde-cta font-medium" onclick="event.preventDefault(); document.getElementById('corretora').scrollIntoView({ behavior: 'smooth' });">Contato</a>
+          <a href="javascript:location.reload()" class="text-azul-principal hover:text-verde-cta font-medium">Home</a>
+          <a href="#detalhes-projeto" class="text-azul-principal hover:text-verde-cta font-medium">Sobre</a>
+          <a href="#localizacao" class="text-azul-principal hover:text-verde-cta font-medium">Localização</a>
+          <a href="#corretora" class="text-azul-principal hover:text-verde-cta font-medium"
+            onclick="event.preventDefault(); document.getElementById('corretora').scrollIntoView({ behavior: 'smooth' });">Contato</a>
         </nav>
       </div>
     </div>
@@ -81,17 +114,10 @@
               :style="`transform: translateX(-${activeSlide * 100}%)`">
               <template x-for="(slide, index) in slides" :key="index">
                 <div class="flex-shrink-0 w-full">
-                  <img :src="slide" class="w-full h-64 object-cover" alt="Imagem do imóvel">
-                  <!-- Separadores removidos daqui para não cobrir a imagem -->
+                  <img :src="slide" class="carousel-video-size" alt="Imagem do imóvel">
                 </div>
               </template>
             </div>
-            <!-- Separadores movidos para fora do loop e posicionados sobre a imagem -->
-            <!-- <img src="./assets/separador-direita.svg" alt="Separador Direito"
-              class="absolute bottom-14 left-1/2 transform -translate-x-1/2 h-4 z-10">
-            <img src="./assets/separador-esquerda.svg" alt="Separador Esquerdo"
-              class="absolute bottom-14 right-1/2 transform translate-x-1/2 h-4 z-10"> -->
-
             <!-- Indicadores -->
             <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10">
               <template x-for="(slide, index) in slides" :key="index">
@@ -125,9 +151,9 @@
           title="Quero saber mais">Quero saber mais</button>
       </div>
       <div class="rounded-lg overflow-hidden shadow-xl">
-        <video class="w-full h-auto" controls poster="./assets/poster_video.jpg"> <!-- Adicionado poster -->
-          <source src="./assets/video_anuncio (1).mp4" type="video/mp4">
-          <source src="./assets/video_anuncio (2).webm" type="video/webm">
+        <video class="carousel-video-size" controls autoplay muted poster="./assets/poster_video.jpg">
+          <source src="./assets/video_anuncio (1).mp4" type="video/mp4" alt="Vídeo do imóvel">
+          <source src="./assets/video_anuncio (2).webm" type="video/webm" alt="Vídeo do imóvel">
           Seu navegador não suporta a tag de vídeo.
         </video>
       </div>
@@ -163,7 +189,8 @@
           <div>
             <label for="msg-flutuante" class="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
             <textarea id="msg-flutuante" name="mensagem" placeholder="Digite aqui sua mensagem" rows="3"
-              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta" required></textarea>
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-verde-cta"
+              required></textarea>
           </div>
         </div>
         <button type="submit"
@@ -175,10 +202,43 @@
 
 
     <!-- Carrossel - Visível apenas em telas menores, após o formulário -->
-    <div x-data="{ activeSlide: 0, slides: ['./assets/bairro.jpg', './assets/mapa.jpg', './assets/localizacao.jpg'] }"
-      x-init="setInterval(() => { activeSlide = (activeSlide + 1) % slides.length }, 5000)"
-      class="md:hidden mt-12 relative">
-      <!-- Conteúdo do carrossel permanece inalterado -->
+    <div class="carousel-container mt-12 relative">
+      <div x-data="{ activeSlide: 0, slides: ['./assets/bairro.jpg', './assets/mapa.jpg', './assets/localizacao.jpg'] }"
+        x-init="setInterval(() => { activeSlide = (activeSlide + 1) % slides.length }, 5000)"
+        class="overflow-hidden rounded-lg shadow-lg">
+        <div class="flex transition-transform duration-500" :style="`transform: translateX(-${activeSlide * 100}%)`">
+          <template x-for="(slide, index) in slides" :key="index">
+            <div class="flex-shrink-0 w-full">
+              <img :src="slide" class="carousel-image" alt="Imagem do imóvel">
+            </div>
+          </template>
+        </div>
+        <!-- Indicadores -->
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10">
+          <template x-for="(slide, index) in slides" :key="index">
+            <button @click="activeSlide = index"
+              :class="{'bg-verde-cta': activeSlide === index, 'bg-white/50': activeSlide !== index}"
+              class="w-3 h-3 rounded-full transition-colors duration-300"></button>
+          </template>
+        </div>
+        <!-- Botões de navegação -->
+        <button @click="activeSlide = activeSlide === 0 ? slides.length - 1 : activeSlide - 1"
+          class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md z-10"
+          title="Previous Slide">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-azul-principal" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button @click="activeSlide = activeSlide === slides.length - 1 ? 0 : activeSlide + 1"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md z-10"
+          title="Next Slide">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-azul-principal" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -202,7 +262,8 @@
       <div class="grid md:grid-cols-2 gap-8 items-center">
         <div class="text-center md:text-right">
           <h2 class="text-3xl font-bold text-azul-principal mb-4">Conforto e qualidade</h2>
-          <p class="text-lg text-gray-700 mb-6">Unidades com 1 ou 2 dormitórios, varanda e área de lazer completa. Ideal para
+          <p class="text-lg text-gray-700 mb-6">Unidades com 1 ou 2 dormitórios, varanda e área de lazer completa. Ideal
+            para
             quem busca praticidade e bem-estar.</p>
           <img src="./assets/separador-esquerda.svg" alt="Separador" class="h-4 mx-auto md:ml-auto">
         </div>
@@ -405,11 +466,14 @@
       <h2 class="text-3xl font-bold mb-4">Receba mais informações por WhatsApp</h2>
       <p class="text-lg mb-8">Cadastre-se para receber tabela de preços, disponibilidade e condições de pagamento
         exclusivas.</p>
-      <form action="processa_formulario.php" method="POST" class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+      <form action="processa_formulario.php" method="POST"
+        class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <input type="hidden" name="formulario_whatsapp" value="1">
         <label for="whatsapp-lead" class="sr-only">WhatsApp</label>
-        <input type="tel" id="whatsapp-lead" name="telefone" placeholder="Seu WhatsApp com DDD" required class="flex-1 px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-verde-cta placeholder-gray-500">
-        <button type="submit" class="bg-verde-cta hover:bg-green-600 text-white font-bold py-3 px-6 rounded-md transition duration-300">
+        <input type="tel" id="whatsapp-lead" name="telefone" placeholder="Seu WhatsApp com DDD" required
+          class="flex-1 px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-verde-cta placeholder-gray-500">
+        <button type="submit"
+          class="bg-verde-cta hover:bg-green-600 text-white font-bold py-3 px-6 rounded-md transition duration-300">
           Quero receber
         </button>
       </form>
@@ -517,9 +581,13 @@
         </a>
       </div>
       <p class="mb-2 text-lilas-claro">Fernanda Imóveis - CRECI 123456-F</p>
-      <p class="text-sm text-gray-400">© <script>document.write(new Date().getFullYear());</script> Fernanda Imóveis. Todos os direitos reservados.</p>
+      <p class="text-sm text-gray-400">©
+        <script>document.write(new Date().getFullYear());</script> Fernanda Imóveis. Todos os direitos reservados.
+      </p>
       <!-- Ano e direitos -->
-      <p class="text-xs text-gray-500 mt-4">Desenvolvido por <a href="https://www.linkedin.com/in/roberto-silva-310625150/" target="_blank" rel="noopener" class="text-lilas-claro hover:underline">Roberto Silva</a>.</p> <!-- Créditos -->
+      <p class="text-xs text-gray-500 mt-4">Desenvolvido por <a
+          href="https://www.linkedin.com/in/roberto-silva-310625150/" target="_blank" rel="noopener"
+          class="text-lilas-claro hover:underline">Roberto Silva</a>.</p> <!-- Créditos -->
     </div>
   </footer>
 
@@ -528,3 +596,4 @@
 </body> -->
 
 </html>
+``` 
