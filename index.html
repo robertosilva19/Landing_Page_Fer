@@ -37,6 +37,11 @@
       }
     }
   </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 
 <body class="font-montserrat">
@@ -49,10 +54,10 @@
       <div class="hidden md:flex items-center space-x-8">
         <span class="h-6 w-px bg-gray-300"></span>
         <nav class="flex space-x-8">
-          <a href="#" class="text-azul-principal hover:text-verde-cta font-medium">Home</a>
-          <a href="#" class="text-azul-principal hover:text-verde-cta font-medium">Sobre</a>
-          <a href="#" class="text-azul-principal hover:text-verde-cta font-medium">Localização</a>
-          <a href="#" class="text-azul-principal hover:text-verde-cta font-medium">Contato</a>
+            <a href="javascript:location.reload()" class="text-azul-principal hover:text-verde-cta font-medium">Home</a>
+            <a href="#detalhes-projeto" class="text-azul-principal hover:text-verde-cta font-medium">Sobre</a>
+            <a href="#localizacao" class="text-azul-principal hover:text-verde-cta font-medium">Localização</a>
+            <a href="#corretora" class="text-azul-principal hover:text-verde-cta font-medium" onclick="event.preventDefault(); document.getElementById('corretora').scrollIntoView({ behavior: 'smooth' });">Contato</a>
         </nav>
       </div>
     </div>
@@ -121,8 +126,8 @@
       </div>
       <div class="rounded-lg overflow-hidden shadow-xl">
         <video class="w-full h-auto" controls poster="./assets/poster_video.jpg"> <!-- Adicionado poster -->
-          <source src="./assets/video_anuncio (1).mp4" type="video apresentação">
-          <source src="./assets/video_anuncio (2).webm" type="video apresentação">
+          <source src="./assets/video_anuncio (1).mp4" type="video/mp4">
+          <source src="./assets/video_anuncio (2).webm" type="video/webm">
           Seu navegador não suporta a tag de vídeo.
         </video>
       </div>
@@ -178,7 +183,7 @@
   </section>
 
   <!-- Seção de Conteúdo (Localização e Conforto) -->
-  <section class="py-16 bg-white">
+  <section id="localizacao" class="localizacao py-16 bg-white">
     <div class="max-w-6xl mx-auto px-4">
       <!-- Localização -->
       <div class="grid md:grid-cols-2 gap-8 items-center mb-24">
@@ -211,9 +216,14 @@
     </div>
   </section>
 
+  <section id="detalhes-projeto" class="detalhes-projeto py-16 bg-cinza-claro">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
+      <!-- Conteúdo da seção -->
+    </div>
+  </section>
 
   <!-- NOVA SEÇÃO: DETALHES DO PROJETO E PLANTAS -->
-  <section class="py-16 bg-cinza-claro"> <!-- Fundo alternado para contraste -->
+  <section class="detalhes-projeto py-16 bg-cinza-claro"> <!-- Fundo alternado para contraste -->
     <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
 
       <!-- Coluna Esquerda: Texto Detalhes do Projeto -->
@@ -289,7 +299,7 @@
         <h3 class="text-2xl font-bold text-azul-principal mb-6 text-center md:text-left">Sugestão de Fluxo de Pagamento
         </h3>
         <table class="w-full text-left mb-4">
-          <caption class="caption-top text-sm text-gray-600 mb-2 text-center md:text-left">Unidade Ref.: 36m² (sem vaga)
+          <caption class="caption-top text-sm text-gray-600 mb-2 text-center md:text-left">Unidade Ref.: 26m² (sem vaga)
           </caption> <!-- Adicionada legenda -->
           <tbody>
             <tr class="border-b border-gray-200">
@@ -424,7 +434,7 @@
         </div>
 
         <!-- Formulário Contato -->
-        <div class="bg-white rounded-lg shadow-lg p-6 border border-gray-200"> <!-- Adicionado Borda -->
+        <div id="corretora" class="bg-white rounded-lg shadow-lg p-6 border border-gray-200"> <!-- Adicionado Borda -->
           <div class="mb-6">
             <h2 class="text-2xl font-bold text-azul-principal mb-2">Fale com a corretora</h2>
             <p class="text-gray-600">Agende sua visita, tire dúvidas ou solicite uma simulação personalizada agora
@@ -507,9 +517,9 @@
         </a>
       </div>
       <p class="mb-2 text-lilas-claro">Fernanda Imóveis - CRECI 123456-F</p>
-      <p class="text-sm text-gray-400">© 2024 Fernanda Imóveis. Todos os direitos reservados.</p>
+      <p class="text-sm text-gray-400">© <script>document.write(new Date().getFullYear());</script> Fernanda Imóveis. Todos os direitos reservados.</p>
       <!-- Ano e direitos -->
-      <p class="text-xs text-gray-500 mt-4">Desenvolvido por [Seu Nome/Agência]. Projeto fictício.</p> <!-- Créditos -->
+      <p class="text-xs text-gray-500 mt-4">Desenvolvido por <a href="https://www.linkedin.com/in/roberto-silva-310625150/" target="_blank" rel="noopener" class="text-lilas-claro hover:underline">Roberto Silva</a>.</p> <!-- Créditos -->
     </div>
   </footer>
 

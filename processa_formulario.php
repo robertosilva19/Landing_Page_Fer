@@ -23,6 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $telefone = $_POST['telefone'] ?? '';
         $mensagem = $_POST['mensagem'] ?? '';
 
+        // Validação do número de telefone
+        if (!preg_match('/^\d{2} - 9\d{4}-\d{4}$|^\d{11}$/', $telefone)) {
+            echo "<script>alert('Por favor, insira um número de celular válido no formato xx - 9xxxx-xxxx ou xxxxxxxxxxx.'); window.location.href = '/Landing_Page/index.html';</script>";
+            exit;
+        }
+
         // Validação básica
         if (!empty($nome) && !empty($email) && !empty($telefone) && !empty($mensagem)) {
             // Insere os dados no banco de dados
@@ -34,13 +40,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':telefone' => $telefone,
                 ':mensagem' => $mensagem,
             ]);
-            echo "Formulário de contato enviado com sucesso!";
+            // Exibe mensagem de sucesso e recarrega a página
+            echo "<script>alert('Cadastro realizado com sucesso!'); window.location.href = '/Landing_Page/index.html';</script>";
+            exit;
         } else {
-            echo "Por favor, preencha todos os campos.";
+            echo "<script>alert('Por favor, preencha todos os campos.');</script>";
         }
     } elseif (isset($_POST['formulario_whatsapp'])) {
         // Dados do formulário de WhatsApp
         $telefone = $_POST['telefone'] ?? '';
+
+        // Validação do número de telefone
+        if (!preg_match('/^\d{2} - 9\d{4}-\d{4}$|^\d{11}$/', $telefone)) {
+            echo "<script>alert('Por favor, insira um número de celular válido no formato xx - 9xxxx-xxxx ou xxxxxxxxxxx.'); window.location.href = '/Landing_Page/index.html';</script>";
+            exit;
+        }
 
         // Validação básica
         if (!empty($telefone)) {
@@ -50,12 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([
                 ':telefone' => $telefone,
             ]);
-            echo "Formulário de WhatsApp enviado com sucesso!";
+            // Exibe mensagem de sucesso e recarrega a página
+            echo "<script>alert('Cadastro realizado com sucesso!'); window.location.href = '/Landing_Page/index.html';</script>";
+            exit;
         } else {
-            echo "Por favor, preencha o campo de telefone.";
+            echo "<script>alert('Por favor, preencha o campo de telefone.');</script>";
         }
-        // Recarrega a página após o envio do formulário
-        echo "<script>location.reload();</script>";
     }
 }
-?>
